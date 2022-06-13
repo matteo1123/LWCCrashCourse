@@ -1,5 +1,6 @@
 import { LightningElement, track } from 'lwc';
 import addTodo from "@salesforce/apex/TodoController.addTodo";
+import getCurrentTodos from '@salesforce/apex/ToDoController.getCurrentTodos';
 
 export default class ToDoManager extends LightningElement {
     time = "ciesta";
@@ -8,7 +9,8 @@ export default class ToDoManager extends LightningElement {
 
     connectedCallback() {
         this.getTime();
-        this.populateTodos();
+        // this.populateTodos();
+        this.fetchTodos();
         setInterval(() => {
             this.getTime();
         }, 1000 * 60);
@@ -53,6 +55,7 @@ export default class ToDoManager extends LightningElement {
 
         addTodo({payload: JSON.stringify(todo)}).then(response => {
             console.log('Item inserted Successfully');
+            this.fetchTodos();
         }).catch(error => {
             console.error('error inserting todo item: ', error);
         });
@@ -69,27 +72,20 @@ export default class ToDoManager extends LightningElement {
         return this.todos && this.todos.length ? this.todos.filter(todo => todo.done) : [];
     }
 
-    populateTodos() {
-        const todos = [
-            {
-                todoId: 0,
-                todoName: "feed dog",
-                done: false,
-                todoDate: new Date()
-            },
-            {
-                todoId: 1,
-                todoName: "fight dog",
-                done: false,
-                todoDate: new Date()
-            },
-            {
-                todoId: 2,
-                todoName: "stab dog",
-                done: true,
-                todoDate: new Date()
+    fetchTodos() {
+        getCurrentTodos().then(result => {
+            if(result) {
+                console.log('retrieved todos: ', result.lenghth);
+                this.todos = result;
             }
-        ];
-        this.todos = todos;
+        }).catch(err => console.log(err));
+    }
+
+    updateHandler() {
+        this.fetchTodos();
+    }
+
+    deleteHandler() {
+        this.fetchTodos();
     }
 }

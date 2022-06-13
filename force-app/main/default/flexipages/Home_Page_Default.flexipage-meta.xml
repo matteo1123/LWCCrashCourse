@@ -31,16 +31,10 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>toDoManager</componentName>
-        </componentInstances>
         <name>Facet-68aeb377-ed1c-435b-a7cf-f09ca1fd0d3e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>toDoList</componentName>
-        </componentInstances>
         <name>Facet-3c9a6b1c-4556-4af6-ac4a-23c99aebd4fb</name>
         <type>Facet</type>
     </flexiPageRegions>
